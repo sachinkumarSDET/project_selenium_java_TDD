@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,44 +14,82 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class webdriverUtility {
 
+	/*
+	 * @param
+	 * maximize the browser
+	 */
 	public void maximizeBrowser(WebDriver driver) {
 		driver.manage().window().maximize();
 	}
 	
+	/*
+	 * @param
+	 * implicit wait condition
+	 */
 	public void implicityWait(WebDriver driver, long time) {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
 	}
+	
+	/*
+	 * @param
+	 * element to be clickable with explicitly wait condition
+	 */
 	
 	public void clickExplicitWait(WebElement element, WebDriver driver, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 	
+	/*
+	 * @param
+	 * check visibility of element with explicit wait condition
+	 */
 	public void visibilityExplicitWait(WebElement element, WebDriver driver, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
+	/*
+	 * @param
+	 * check element to selectable with explicit wait condition
+	 */
 	public void selectedExpplicitlyWait(WebElement element, WebDriver driver, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.elementToBeSelected(element));
 	}
 	
+	/*
+	 * @param
+	 * check alert is present or not with explicit wait condition
+	 */
 	public void alertIsPresenet_ExpelicitlyWait(WebDriver driver, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.alertIsPresent());
 	}
-	
+	/*
+	 * @param
+	 * dropdownn action
+	 * select By index
+	 */
 	public void index_select(WebElement element, int index) {
 		Select select = new Select(element);
 		select.selectByIndex(index);
 	}
-	
+	/*
+	 * @param
+	 * dropdown action
+	 * select by visible text
+	 */
 	public void visibleText_select(WebElement element, String Text) {
 		Select select = new Select(element);
 		select.selectByVisibleText(Text);
 	}
 	
+	/*
+	 * @param
+	 * dropdown action
+	 * select by value
+	 */
 	public void value_select(WebElement element, String value) {
 		Select select = new Select(element);
 		select.selectByValue(value);
@@ -146,9 +185,37 @@ public class webdriverUtility {
 		action.sendKeys(element, filePath);
 	}
 	
+	public void alert_accept(WebDriver driver) {
+		driver.switchTo().alert().accept();
+	}
 	
+	public void alert_dismiss(WebDriver driver) {
+		driver.switchTo().alert().dismiss();
+	}
 	
+	public void alert_getText(WebDriver driver) {
+		driver.switchTo().alert().getText();
+	}
 	
+	public void scrollBy_jse(WebDriver driver, int x, int y) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollBy("+x+", "+y+")");
+	}
+	
+	public void scrollTo_jse(WebDriver driver, int x, int y) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollTo("+x+", "+y+")");
+	}
+	
+	public void click_disabledElemnt(WebDriver driver, WebElement element) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("arguments[0].click();", element);
+	}
+	
+	public void sendKeys_to_disabledElement(WebDriver driver, WebElement element, String text) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("arguments[0].value=arguments[1]", element, text);
+	}
 	
 	
 	

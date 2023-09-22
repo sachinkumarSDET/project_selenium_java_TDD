@@ -8,10 +8,11 @@ public class propertiesUtility {
 
 	
 	public String readData_prop(String key) throws IOException {
-		FileInputStream fis = new FileInputStream("/src/test/resources/propertiesFile");
+		FileInputStream fis = new FileInputStream("./src/test/resources/propertiesFile");
 		Properties pObj = new Properties();
 		pObj.load(fis);
 		String value = pObj.getProperty(key);
+		fis.close();
 		return value;
 	}
 }

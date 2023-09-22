@@ -37,12 +37,20 @@ public class Login_Page {
 	}
 	
 	//Business library
-	public void enter_Username(propertiesUtility prop) throws IOException {
-		UserNameTF.sendKeys(prop.readData_prop("user_name"));
+	public void enter_Username(propertiesUtility prop) {
+		try {
+			UserNameTF.sendKeys(prop.readData_prop("user_name"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void enter_Password(propertiesUtility prop) throws IOException {
-		passwordTF.sendKeys(prop.readData_prop("password"));
+	public void enter_Password(propertiesUtility prop) {
+		try {
+			passwordTF.sendKeys(prop.readData_prop("password"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void click_submit() {
