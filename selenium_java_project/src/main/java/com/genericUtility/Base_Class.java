@@ -28,6 +28,7 @@ public class Base_Class {
 	propertiesUtility propUtiltiy = new propertiesUtility();
 	databaseUtility dbUtility = new databaseUtility();
 	public static WebDriver driver;
+	static WebDriver sdriver;
 	
 	
 	public Login_Page loginPage = new Login_Page(driver);
@@ -39,8 +40,8 @@ public class Base_Class {
 	 * @sachinkumar_biradar
 	 * Connect to the database using valid URL, username and password
 	 */
-	public void connection_To_DB(String URL, String username, String password) throws SQLException {
-		dbUtility.connect_To_DB(URL, username, password);
+	public void connection_To_DB(String URL, String username, String password) throws Throwable {
+		dbUtility.connectToDB(URL, username, password);
 	}
 	
 	/*
@@ -48,7 +49,7 @@ public class Base_Class {
 	 * Close connection from the database
 	 */
 	public void close_connection_from_DB() throws SQLException {
-		dbUtility.close_database();
+		dbUtility.closeFromDB();
 	}
 	
 	/*
