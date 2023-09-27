@@ -7,48 +7,74 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class databaseUtility {
-
-	Driver driver;
-	Connection con;
 	
+	public Driver driver;
+	public Connection con = null;
+	int set = 0;
 	/*
-	 * @sachinkumar_biradar
-	 * connect to the database
+	 * @author Sachinkumar_Biradar
+	 * Connecting to the database
 	 */
-	
-	public void connect_To_DB(String URL, String userName, String password) throws SQLException {
-	DriverManager.registerDriver(driver);
-	con = DriverManager.getConnection(URL, userName, password);
+	public void connectToDB(String url, String username, String password) throws Throwable {
+		 DriverManager.registerDriver(driver);
+		 con = DriverManager.getConnection(url, username, password);
 	}
 	
 	/*
-	 * @sachinkumar_biradar
-	 * Execute the query
+	 * @author Sachinkumar_Biradar
+	 * Disconnecting to the database
 	 */
-	public void execute_database(String query) throws SQLException {
-		ResultSet rs = con.createStatement().executeQuery(query);
-		while(rs.next()) {
-			String firstName = rs.getString(0);
-			String lastName = rs.getString(1);
+	public void closeFromDB() throws SQLException {
+		con.close();
+	}
+	
+	/*
+	 * @author Sachinkumar_Biradar
+	 * Read data from the database
+	 */
+	//read data from the database
+	public String readDataFromDB(String query, int columnIndex, String expdata) throws SQLException {
+		ResultSet result = con.createStatement().executeQuery(query);
+		boolean flag = false;
+		while (result.next()) {
+			if (result.getString(columnIndex).equalsIgnoreCase(expdata)) {
+				flag = true;
+				break;
+			}
 		}
+		if (flag) {
+			System.out.println("Data has been validated upon the verification");
+			return expdata;
+		} else {
+			System.out.println("Data has not been validated upon the verification");
+			return "";
+		}
+		
 	}
 	
 	/*
-	 * @sachinkumar_biradar
-	 * update the database
+	 * @author Sachinkumar_Biradar
+	 * Delete data in the database
 	 */
-	public void update_database(String query) throws SQLException {
-		con.createStatement().executeUpdate(query);
+	public void deleteDataInDBAndValidate(String expectedProject) throws Throwable {
+		String query = "delete from project where project_Id = '"+expectedProject+"';";
+		int set = con.createStatement().executeUpdate(query);
+			if (set==1) {
+				System.out.println("deleted successfully in Database");
+			} else {
+				System.out.println("Not achieved the deletion of the project in Database");
+			}
 	}
 	
-	/*
-	 * @sachinkumar_biradar
-	 * close the connection from the database
-	 */
-	
-	public void close_database() throws SQLException {
-		if (con!=null) {
-			con.close();
+	//Update data in database
+	public void updateDataInDB(String firstname, String lastname, double phonenumber) throws SQLException {
+		String query = "insert into project values('"+firstname+"', '"+lastname+"', '"+phonenumber+"')";
+		set = con.createStatement().executeUpdate(query);
+		
+		if (set==1) {
+			System.out.println("Data updated successfully");
+		} else {
+			System.out.println("Data has not been updated");
 		}
 	}
 }
